@@ -1,0 +1,52 @@
+<input id="query" type="text"> 
+<button id="go">Go</button>
+<button id="boot">boot</button>
+<button id="stop">stop</button>
+
+
+<br>
+<ul id="generation">
+    
+</ul>
+
+<script src="gene.js"></script>
+<script>
+    var w = new World(50, "Satin");
+    var timer = undefined;
+    var btns = {
+        boot: document.querySelector('#boot'),
+        stop: document.querySelector('#stop'),
+        go: document.querySelector('#go')
+    }
+
+    btns.go.addEventListener('click', function() {
+        if (timer) clearInterval(timer);
+        timer = undefined;
+
+        var text = document.querySelector('#query').value;
+        if (text == '' || text.length < 2) {
+            text = "Hello World!";
+            document.querySelector('#query').value = text;
+        }
+
+        w = new World(1000, text);
+        start();
+    })
+
+    btns.boot.addEventListener('click', function() {
+        if (!timer) start();
+    })
+
+    btns.stop.addEventListener('click', function() {
+        clearInterval(timer);
+        timer = undefined;
+    })
+
+    function start () {
+        timer = setInterval(function() {
+            console.log('booting');
+            w.boot(timer);
+        }, 1)
+    }
+
+</script>
